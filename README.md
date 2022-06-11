@@ -3,4 +3,4 @@ Exemplo de API feita em Aspnet usando Dapper em conjunto com MySQL
 
 ## NuGets
  - [Dapper](https://www.nuget.org/packages/Dapper/)
- - [MySqlConnector]https://www.nuget.org/packages/MySqlConnector/)
+ - [MySqlConnector](https://www.nuget.org/packages/MySqlConnector/)

@@ -1,5 +1,5 @@
 ﻿using Dapper;
-using Microsoft.Data.Sqlite;
+using MySqlConnector;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,7 +36,7 @@ namespace tarefas.webapi.Repository
 
 		public void Criar(string descricao, bool concluido)
 		{
-			using var connection = new SqliteConnection(databaseConfig.ConnectionString);
+			using var connection = databaseConfig.GetConnection();
 
 			var parametros = new DynamicParameters();
 			parametros.Add("@Descricao", descricao);
@@ -47,19 +47,19 @@ namespace tarefas.webapi.Repository
 
 		public void Atualizar(Tarefa tarefa)
 		{
-			using var connection = new SqliteConnection(databaseConfig.ConnectionString);
+			using var connection = databaseConfig.GetConnection();
 			connection.Execute(atualizar_sql, tarefa);
 		}
 
 		public IEnumerable<Tarefa> SelecionarTodos()
 		{
-			using var connection = new SqliteConnection(databaseConfig.ConnectionString);
+			using var connection = databaseConfig.GetConnection();
 			return  connection.Query<Tarefa>(selecionarTodos_sql);
 		}
 
 		public Tarefa SelecionarPorId(int idTarefa)
 		{
-			using var connection = new SqliteConnection(databaseConfig.ConnectionString);
+			using var connection = databaseConfig.GetConnection();
 			var parametros = new DynamicParameters();
 			parametros.Add("@IdTarefa", idTarefa);
 			return connection.QueryFirstOrDefault<Tarefa>(selecionarPorId_sql, parametros);
@@ -67,7 +67,7 @@ namespace tarefas.webapi.Repository
 
 		public void Deletar(int idTarefa)
 		{
-			using var connection = new SqliteConnection(databaseConfig.ConnectionString);
+			using var connection = databaseConfig.GetConnection();
 			var parametros = new DynamicParameters();
 			parametros.Add("@IdTarefa", idTarefa);
 			connection.Execute(deletar_sql, parametros);

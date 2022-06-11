@@ -39,14 +39,13 @@ namespace tarefas.webapi
             string variavelDeSistema = Configuration["ConnectionString"];
             string connectionString = Environment.GetEnvironmentVariable(variavelDeSistema);
 
+
             if (String.IsNullOrWhiteSpace(connectionString)) {
                 Console.WriteLine("A váriavel de ambiente com o nome " + variavelDeSistema + "não foi encontrada");
                 Console.WriteLine("Este exemplo está configurado para pegar a connection string de um variável de ambiente");
             }
 
             services.AddSingleton(new DatabaseConfig(connectionString));
-
-            services.AddSingleton<IDatabaseSetup, SqliteDatabaseSetup>();
 
             services.AddTransient<TarefaRepository>();
 
@@ -75,7 +74,6 @@ namespace tarefas.webapi
                 endpoints.MapControllers();
             });
 
-            serviceProvider.GetService<IDatabaseSetup>().RunSetup();
         }
     }
 }
