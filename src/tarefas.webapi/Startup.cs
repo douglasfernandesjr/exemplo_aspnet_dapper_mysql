@@ -36,7 +36,15 @@ namespace tarefas.webapi
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "tarefas.webapi", Version = "v1" });
             });
 
-            services.AddSingleton(new DatabaseConfig(Configuration["ConnectionString"]));
+            string variavelDeSistema = Configuration["ConnectionString"];
+            string connectionString = Environment.GetEnvironmentVariable(variavelDeSistema);
+
+            if (String.IsNullOrWhiteSpace(connectionString)) {
+                Console.WriteLine("A váriavel de ambiente com o nome " + variavelDeSistema + "não foi encontrada");
+                Console.WriteLine("Este exemplo está configurado para pegar a connection string de um variável de ambiente");
+            }
+
+            services.AddSingleton(new DatabaseConfig(connectionString));
 
             services.AddSingleton<IDatabaseSetup, SqliteDatabaseSetup>();
 
