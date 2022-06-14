@@ -1,9 +1,5 @@
 ﻿using Dapper;
-using MySqlConnector;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using tarefas.webapi.Database;
 using tarefas.webapi.Domain.Entities;
 
@@ -54,7 +50,8 @@ namespace tarefas.webapi.Repository
 		public IEnumerable<Tarefa> SelecionarTodos()
 		{
 			using var connection = databaseConfig.GetConnection();
-			return  connection.Query<Tarefa>(selecionarTodos_sql);
+			return connection.Query<Tarefa>(selecionarTodos_sql);
+
 		}
 
 		public Tarefa SelecionarPorId(int idTarefa)
